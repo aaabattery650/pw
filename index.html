@@ -1,417 +1,746 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>About Me — Adi Takhar</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Adi Takhar — high school maker who loves robotics, 3D printing, and coding." />
-  <meta name="theme-color" content="#0ea5e9" />
-
+  <meta charset="UTF-8">
+  <title>Adi Takhar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Adi Takhar — high school maker who loves robotics, 3D printing, and coding.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root{
-      color-scheme: light dark;
-      --bg:#0b1020; --bg-soft:#0f162b; --text:#e6e8ef; --muted:#a7b0c0;
-      --card:#121a33; --border:rgba(255,255,255,.08);
-      --accent:#0ea5e9; --accent-2:#22c55e; --link:#7dd3fc;
-      --shadow:0 10px 30px rgba(2,8,23,.45); --ring:rgba(14,165,233,.35);
-      --grad-1:rgba(14,165,233,.65); --grad-2:rgba(34,197,94,.65); --grad-3:rgba(124,58,237,.55);
-      /* dynamic mouse variables */
-      --mx:50vw; --my:50vh; --mxp:0.5; --myp:0.5;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; }
+
+    :root {
+      --text: #0f0f0f;
+      --text-2: #555;
+      --bg: #fafaf9;
+      --surface: #fff;
+      --border: #e4e4e3;
+      --accent: #e84d2e;
+      --accent-soft: #fef0ed;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Space Grotesk', -apple-system, sans-serif;
     }
-    @media (prefers-color-scheme: light){
-      :root{
-        --bg:#f6f8fb; --bg-soft:#f0f4f9; --text:#0f172a; --muted:#465169;
-        --card:#ffffff; --border:rgba(2,8,23,.08); --link:#0369a1;
-        --shadow:0 8px 24px rgba(2,8,23,.08);
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text: #ededec;
+        --text-2: #8a8a88;
+        --bg: #0e0e0e;
+        --surface: #171717;
+        --border: #262626;
+        --accent: #f06849;
+        --accent-soft: #1f1210;
       }
     }
 
-    html{scroll-behavior:smooth}
-    body{
-      margin:0; min-height:100dvh; font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(1200px 600px at 20% -10%, rgba(14,165,233,.18), transparent 60%),
-        radial-gradient(1000px 500px at 120% 10%, rgba(34,197,94,.14), transparent 60%),
-        var(--bg);
-      position:relative; isolation:isolate;
+    html { scroll-behavior: auto; }
+
+    body {
+      font-family: var(--sans);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    /* animated film */
-    body::before{
-      content:""; position:fixed; inset:-20%;
-      background:conic-gradient(from 0deg at 50% 50%, rgba(14,165,233,.06), rgba(34,197,94,.06), rgba(124,58,237,.06), rgba(14,165,233,.06));
-      filter:blur(40px); animation:spin 24s linear infinite; z-index:-2;
-    }
-    @keyframes spin{to{transform:rotate(360deg)}}
-
-    /* mouse spotlight */
-    .spotlight{
-      pointer-events:none; position:fixed; inset:0; z-index:-1;
-      background:
-        radial-gradient(600px 400px at var(--mx) var(--my), color-mix(in oklab, var(--accent) 30%, transparent), transparent 60%),
-        radial-gradient(900px 600px at calc(100% - var(--mx)) calc(100% - var(--my)), color-mix(in oklab, var(--accent-2) 22%, transparent), transparent 70%);
-      transition:background 80ms linear;
+    /* ---- Mosaic hero ---- */
+    .mosaic-section {
+      height: 300vh;
+      position: relative;
     }
 
-    .wrap{max-width:920px; margin:0 auto; padding:32px 24px 48px}
-
-    /* orbs */
-    .backdrop{position:fixed; inset:-20% -10% auto -10%; pointer-events:none; z-index:0}
-    .orb{position:absolute; filter:blur(40px); opacity:.35; width:320px; height:320px; border-radius:50%;
-      background:radial-gradient(closest-side, var(--grad-1), transparent 70%); animation:float 14s ease-in-out infinite}
-    .orb.g2{left:70%; top:10%; width:420px; height:420px; background:radial-gradient(closest-side, var(--grad-2), transparent 70%); animation-duration:18s}
-    .orb.g3{left:10%; top:40%; width:260px; height:260px; background:radial-gradient(closest-side, var(--grad-3), transparent 70%); animation-duration:22s}
-    @keyframes float{0%,100%{transform:translateY(0) translateX(0)}50%{transform:translateY(16px) translateX(-10px)}}
-
-    /* header */
-    .site-header{
-      display:flex; align-items:center; justify-content:space-between; gap:16px;
-      background:linear-gradient(var(--card),var(--card)) padding-box,
-                 linear-gradient(140deg, rgba(255,255,255,.12), rgba(255,255,255,.04)) border-box;
-      border:1px solid transparent; border-radius:16px; padding:14px 16px;
-      box-shadow:var(--shadow); backdrop-filter:blur(8px);
-      position:sticky; top:12px; z-index:2; transform-style:preserve-3d;
-    }
-    .id{display:flex; align-items:center; gap:14px}
-    .avatar{width:44px; height:44px; border-radius:50%; display:grid; place-items:center; color:#0b1020; font-weight:700;
-      background:conic-gradient(from 140deg, var(--accent), var(--accent-2));
-      box-shadow:inset 0 0 0 2px rgba(255,255,255,.8)}
-    .site-header h1{font-size:1.4rem; line-height:1.2; margin:0}
-    .name-gradient{background:linear-gradient(90deg,#7dd3fc,#86efac 60%,#c4b5fd); -webkit-background-clip:text; background-clip:text; color:transparent; background-size:200% 100%; animation:shine 6s ease-in-out infinite;}
-    @keyframes shine{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-    .tagline{margin:4px 0 0; color:var(--muted); font-size:.95rem}
-
-    .theme-toggle{border:1px solid var(--border); background:var(--card); color:var(--text); border-radius:12px; padding:8px 12px; cursor:pointer; transition:transform .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;}
-    .theme-toggle:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.18); box-shadow:0 8px 26px rgba(14,165,233,.25)}
-
-    .nav{display:none; gap:10px; align-items:center}
-    .nav a{text-decoration:none; color:var(--muted); border:1px solid var(--border); padding:6px 10px; border-radius:10px; transition:transform .18s ease}
-    .nav a:hover{color:var(--text); border-color:rgba(255,255,255,.18); transform:translateY(-2px)}
-    @media (min-width:720px){.nav{display:flex}}
-
-    /* sections */
-    section{margin-top:28px; position:relative; z-index:1; animation:fadeSlide .6s ease both}
-    @keyframes fadeSlide{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)}}
-    h2{font-size:1.2rem; margin:0 0 14px; letter-spacing:.2px; position:relative; display:inline-block}
-    h2::after{content:""; position:absolute; left:0; right:0; bottom:-6px; height:2px; background:linear-gradient(90deg,var(--accent),transparent); border-radius:2px}
-    p{line-height:1.7}
-
-    .card{
-      background:linear-gradient(var(--card),var(--card)) padding-box,
-                 linear-gradient(135deg, rgba(125,211,252,.25), rgba(134,239,172,.2)) border-box;
-      border:1px solid transparent; border-radius:16px; padding:16px; box-shadow:var(--shadow);
-      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
-      transform-style:preserve-3d; will-change:transform, box-shadow;
+    .mosaic-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
 
-    /* project cards */
-    .cards{list-style:none; padding:0; margin:0; display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(260px,1fr))}
-    .cards li{display:flex}
-    .project{display:grid; gap:8px; flex:1}
-    .project:hover{box-shadow:0 18px 40px rgba(14,165,233,.22)}
-    .project h3{margin:0; font-size:1rem}
-    .project .desc{color:var(--muted); font-size:.95rem}
-    .pill{display:inline-block; font-size:.75rem; color:var(--muted); border:1px solid var(--border); padding:2px 8px; border-radius:999px}
-    .actions{display:flex; gap:8px; align-items:center}
+    .mosaic-wrap {
+      position: relative;
+      height: min(75vh, 700px);
+      aspect-ratio: 9 / 16;
+    }
 
-    .btn{display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:.9rem; background:var(--accent); color:#05131a; text-decoration:none; padding:8px 12px; border-radius:10px; border:1px solid transparent; transition:transform .18s ease, filter .18s ease, box-shadow .18s ease; box-shadow:0 6px 20px rgba(14,165,233,.25); will-change:transform;}
-    .btn:hover{transform:translateY(-2px) scale(1.02); filter:brightness(1.05)}
-    .btn.secondary{background:transparent; color:var(--link); border-color:var(--border); box-shadow:none}
+    .tile {
+      position: absolute;
+      background-image: url('https://cdn.hackclub.com/019d232c-8517-7827-9d9d-c5041a938c32/IMG_3637.jpeg');
+      background-size: calc(var(--cols) * 100%) calc(var(--rows) * 100%);
+      will-change: transform, opacity;
+      border-radius: 3px;
+    }
 
-    /* hero */
-    .hero{margin-top:24px; display:grid; gap:10px; padding:18px; position:relative; overflow:hidden}
-    .hero::after{content:""; position:absolute; inset:-2px; border-radius:16px; background:radial-gradient(400px 220px at var(--mx) var(--my), rgba(14,165,233,.18), transparent 60%); pointer-events:none; transition:background 80ms linear;}
-    .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:.8rem; color:var(--muted)}
-    .dot{width:8px; height:8px; border-radius:999px; background:var(--accent); box-shadow:0 0 0 6px rgba(14,165,233,.15)}
-    .headline{font-size:clamp(1.6rem, 2.6vw + 1rem, 2.2rem); line-height:1.2; margin:0}
-    .sub{color:var(--muted); margin:0}
+    .mosaic-text {
+      position: absolute;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      white-space: nowrap;
+    }
 
-    /* WOW effects */
-    [data-mag]{position:relative; will-change:transform}
-    .tilt{transform-style:preserve-3d; perspective:800px}
-    .tilt:hover{transform:translateZ(0.001px)} /* trigger GPU */
+    .mosaic-text h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
 
-    /* custom cursor */
-    .cursor{pointer-events:none; position:fixed; left:0; top:0; width:28px; height:28px; border-radius:50%; border:2px solid color-mix(in oklab, var(--accent) 80%, transparent); transform:translate(-50%,-50%); opacity:.85; z-index:9999; transition:width .12s ease, height .12s ease, border-color .12s ease, opacity .2s ease; mix-blend-mode:exclusion;}
-    .cursor.-hot{width:42px; height:42px; border-color:color-mix(in oklab, var(--accent-2) 85%, transparent)}
+    .mosaic-text p {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--text-2);
+      margin-top: 4px;
+    }
 
-    @media (prefers-reduced-motion: reduce){
-      .card, .btn, .chip, .project, .nav a, .theme-toggle{transition:none}
-      .spotlight, .hero::after{display:none}
-      .cursor{display:none}
-      body::before{animation:none}
+    .char {
+      display: inline-block;
+      will-change: transform, opacity;
+    }
+
+    /* spaces need width */
+    .char-space { width: 0.3em; }
+
+    /* Scatter chars in body content */
+    .sc {
+      display: inline-block;
+      will-change: transform, opacity;
+    }
+    .sc-space { width: 0.3em; }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-2);
+      opacity: 0.6;
+      animation: nudge 2s ease-in-out infinite;
+    }
+
+    @keyframes nudge {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ---- Main content ---- */
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 80px 24px 80px;
+    }
+
+    /* ---- Header ---- */
+    header { margin-bottom: 64px; }
+
+    .name {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+
+    .name span { color: var(--accent); }
+
+    .subtitle {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--text-2);
+      margin-top: 8px;
+      letter-spacing: 0.02em;
+    }
+
+    nav {
+      display: flex;
+      gap: 6px;
+      margin-top: 24px;
+    }
+
+    nav a {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--text-2);
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    /* ---- Intro ---- */
+    .intro {
+      margin-bottom: 64px;
+      padding-left: 20px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .intro h2 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.35;
+    }
+
+    .intro p {
+      color: var(--text-2);
+      font-size: 0.95rem;
+      margin-top: 6px;
+    }
+
+    /* ---- Sections ---- */
+    section { margin-bottom: 56px; }
+    a { color: inherit; }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    section p {
+      color: var(--text-2);
+      font-size: 0.95rem;
+      max-width: 560px;
+    }
+
+    /* ---- Projects ---- */
+    .projects {
+      display: grid;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .project {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: var(--surface);
+      text-decoration: none;
+      color: var(--text);
+      transition: background 0.15s;
+    }
+
+    .project:hover { background: var(--accent-soft); }
+
+    .project-name {
+      font-weight: 600;
+      font-size: 0.92rem;
+      letter-spacing: -0.01em;
+    }
+
+    .project-desc {
+      color: var(--text-2);
+      font-size: 0.82rem;
+      margin-top: 2px;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--text-2);
+      background: var(--bg);
+      padding: 3px 10px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .arrow {
+      color: var(--text-2);
+      font-size: 0.85rem;
+      transition: transform 0.15s, color 0.15s;
+    }
+
+    .project:hover .arrow {
+      transform: translateX(3px);
+      color: var(--accent);
+    }
+
+    .project-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ---- Skills ---- */
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .skill:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    /* ---- Contact ---- */
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .contact-links a {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--text);
+      padding: 10px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: border-color 0.15s, background 0.15s, color 0.15s;
+    }
+
+    .contact-links a:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    /* ---- Footer ---- */
+    footer {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-2);
+    }
+
+    /* ---- Mobile ---- */
+    @media (max-width: 560px) {
+      .name { font-size: 1.8rem; }
+      .project { grid-template-columns: 1fr; gap: 8px; }
+      .project-right { justify-content: flex-start; }
+      .arrow { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .mosaic-section { height: auto; }
+      .mosaic-sticky { position: relative; height: auto; padding: 80px 0; }
+      .tile, .char { transform: none !important; opacity: 1 !important; }
+      .scroll-hint { display: none; }
     }
   </style>
 </head>
 <body>
-  <!-- spotlight -->
-  <div class="spotlight" aria-hidden="true"></div>
 
-  <!-- backdrop orbs -->
-  <div class="backdrop" aria-hidden="true">
-    <div class="orb g1" style="left:-4%; top:-6%"></div>
-    <div class="orb g2"></div>
-    <div class="orb g3"></div>
-  </div>
-
-  <div class="wrap">
-    <header class="site-header card tilt" data-mag>
-      <div class="id">
-        <div class="avatar" aria-hidden="true">AT</div>
-        <div>
-          <h1 class="name-gradient">Adi Takhar</h1>
-          <p class="tagline">High school maker — robotics, 3D printing, code.</p>
+  <!-- Mosaic scroll hero -->
+  <div class="mosaic-section" id="mosaicSection">
+    <div class="mosaic-sticky">
+      <div class="mosaic-wrap" id="mosaicWrap">
+        <!-- tiles injected by JS -->
+        <div class="mosaic-text" id="mosaicText">
+          <h2 data-text="Adi Takhar." data-accent-last="true"></h2>
+          <p data-text="// maker · builder · tinkerer"></p>
         </div>
       </div>
-      <nav class="nav" aria-label="Primary">
-        <a href="#about-heading" data-mag>About</a>
-        <a href="#projects-heading" data-mag>Projects</a>
-        <a href="#skills-heading" data-mag>Skills</a>
-        <a href="#contact-heading" data-mag>Contact</a>
+      <div class="scroll-hint" id="scrollHint">scroll down</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <header>
+      <h1 class="name" data-scatter>Adi Takhar<span>.</span></h1>
+      <p class="subtitle" data-scatter>// high school maker — robotics, 3D printing, code</p>
+      <nav aria-label="Primary">
+        <a href="#about">about</a>
+        <a href="#projects">projects</a>
+        <a href="#skills">skills</a>
+        <a href="#contact">contact</a>
       </nav>
-      <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme" data-mag>Toggle Theme</button>
     </header>
 
     <main>
-      <section class="hero card tilt" aria-label="Intro" data-mag>
-        <span class="eyebrow"><span class="dot" aria-hidden="true"></span> Student Maker</span>
-        <h2 class="headline">I build things that blink, move, and learn.</h2>
-        <p class="sub">From Arduino alarms to ESP32 sensors and OpenCV turrets — I love turning ideas into working prototypes.</p>
+      <div class="intro">
+        <h2 data-scatter>I build things that blink, move, and learn.</h2>
+        <p data-scatter>From Arduino alarms to ESP32 sensors and OpenCV turrets — I love turning ideas into working prototypes.</p>
+      </div>
+
+      <section id="about">
+        <div class="section-label" data-scatter>About</div>
+        <p data-scatter>I'm a high school student who enjoys robotics, 3D printing, and tinkering. I'm currently working on an OpenCV-based automated sentry turret.</p>
       </section>
 
-      <section class="card tilt" aria-labelledby="about-heading" data-mag>
-        <h2 id="about-heading">About Me</h2>
-        <p>
-          Hi! I’m <strong>Adi Takhar</strong>, a high school student who enjoys robotics, 3D printing, and tinkering.
-          I love making things and I’m currently working on an <strong>OpenCV-based automated sentry turret</strong>.
-        </p>
-      </section>
-
-      <section aria-labelledby="projects-heading">
-        <h2 id="projects-heading">Projects</h2>
-
-        <!-- Featured (from your uploaded HTMLs only) -->
-        <ul class="cards">
-          <li>
-            <article class="project card tilt" data-mag>
-              <header><h3>discordBot-v1</h3><span class="pill">Featured</span></header>
-              <p class="desc">Discord bot that tells the current time.</p>
-              <div class="actions">
-                <a class="btn" href="https://github.com/Adad650/discordBot-v1" target="_blank" rel="noopener" data-mag>View on GitHub</a>
-                <span style="margin-left:auto;display:flex;gap:6px;align-items:center"><span class="pill">Python</span></span>
-              </div>
-            </article>
-          </li>
-          <li>
-            <article class="project card tilt" data-mag>
-              <header><h3>Morse-Code-Keyboard-Translator</h3><span class="pill">Featured</span></header>
-              <p class="desc">Keyboard → Morse code translator for quick practice.</p>
-              <div class="actions">
-                <a class="btn" href="https://github.com/Adad650/Morse-Code-Keyboard-Translator" target="_blank" rel="noopener" data-mag>View on GitHub</a>
-                <span style="margin-left:auto;display:flex;gap:6px;align-items:center"><span class="pill">Python</span></span>
-              </div>
-            </article>
-          </li>
-          <li>
-            <article class="project card tilt" data-mag>
-              <header><h3>studyBuddy</h3><span class="pill">Featured</span></header>
-              <p class="desc">Simple study helper/organizer to keep sessions on track.</p>
-              <div class="actions">
-                <a class="btn" href="https://github.com/Adad650/studyBuddy" target="_blank" rel="noopener" data-mag>View on GitHub</a>
-                <span style="margin-left:auto;display:flex;gap:6px;align-items:center"><span class="pill">Python</span></span>
-              </div>
-            </article>
-          </li>
-        </ul>
-
-        <!-- Repos from the HTML you provided (static, no scraping) -->
-        <ul class="cards">
-          <li>
-            <article class="project card tilt" data-mag>
-              <header><h3>ESP32-based Parking Assistant</h3><span class="pill">July '25</span></header>
-              <p class="desc">Ultrasonic-guided garage parking with distance feedback on LEDs.</p>
-              <div class="actions">
-                <a class="btn" href="https://github.com/Adad650/garageSensor" target="_blank" rel="noopener" data-mag>View Project</a>
-                <a class="btn secondary" href="https://github.com/Adad650" target="_blank" rel="noopener" data-mag>GitHub</a>
-              </div>
-            </article>
-          </li>
-
-          <li>
-            <article class="project card tilt" data-mag>
-              <header><h3>Gaming Website (AI-assisted)</h3><span class="pill">Aug '25</span></header>
-              <p class="desc">A fun web playground featuring classic games and UI polish.</p>
-              <div class="actions">
-                <a class="btn" href="https://github.com/Adad650/gamingHTML" target="_blank" rel="noopener" data-mag>View Project</a>
-                <a class="btn secondary" href="https://github.com/Adad650" target="_blank" rel="noopener" data-mag>GitHub</a>
-              </div>
-            </article>
-          </li>
-
-          <li>
-            <article class="project card tilt" data-mag>
-              <header><h3>Arduino-based Alarm Clock</h3><span class="pill">June '25</span></header>
-              <p class="desc">DIY alarm with buzzer, time display, and snooze button.</p>
-              <div class="actions">
-                <a class="btn" href="https://github.com/Adad650/alarmClock" target="_blank" rel="noopener" data-mag>View Project</a>
-                <a class="btn secondary" href="https://github.com/Adad650" target="_blank" rel="noopener" data-mag>GitHub</a>
-              </div>
-            </article>
-          </li>
-
-          <li>
-            <article class="project card tilt" data-mag>
-              <header><h3>ISS Live Location via API</h3><span class="pill">July '25</span></header>
-              <p class="desc">Fetches and displays the ISS position using a public API.</p>
-              <div class="actions">
-                <a class="btn" href="https://github.com/Adad650/issLiveLocation" target="_blank" rel="noopener" data-mag>View Project</a>
-                <a class="btn secondary" href="https://github.com/Adad650" target="_blank" rel="noopener" data-mag>GitHub</a>
-              </div>
-            </article>
-          </li>
-
-          <li>
-            <article class="project card tilt" data-mag>
-              <header><h3>Fun but Useless (C/C++)</h3><span class="pill">June '25</span></header>
-              <p class="desc">Silly experiments in C/C++ — because not everything needs a purpose.</p>
-              <div class="actions">
-                <a class="btn" href="https://github.com/Adad650/funButUseless" target="_blank" rel="noopener" data-mag>View Project</a>
-                <a class="btn secondary" href="https://github.com/Adad650" target="_blank" rel="noopener" data-mag>GitHub</a>
-              </div>
-            </article>
-          </li>
-
-          <li>
-            <article class="project card tilt" data-mag>
-              <header><h3>Hangman / Wordle</h3><span class="pill">May '25</span></header>
-              <p class="desc">Word guessing games built with simple, clean Python.</p>
-              <div class="actions">
-                <a class="btn" href="https://github.com/Adad650/Hangman" target="_blank" rel="noopener" data-mag>View Project</a>
-                <a class="btn secondary" href="https://github.com/Adad650" target="_blank" rel="noopener" data-mag>GitHub</a>
-              </div>
-            </article>
-          </li>
-        </ul>
-      </section>
-
-      <section class="card tilt" aria-labelledby="skills-heading" data-mag>
-        <h2 id="skills-heading">Skills</h2>
-        <div class="skills" role="list">
-          <span class="chip" role="listitem" data-mag><span class="emoji" aria-hidden="true">🐍</span> Python</span>
-          <span class="chip" role="listitem" data-mag><span class="emoji" aria-hidden="true">🔧</span> Arduino</span>
-          <span class="chip" role="listitem" data-mag><span class="emoji" aria-hidden="true">📶</span> ESP32</span>
-          <span class="chip" role="listitem" data-mag><span class="emoji" aria-hidden="true">🧠</span> OpenCV</span>
-          <span class="chip" role="listitem" data-mag><span class="emoji" aria-hidden="true">🖨️</span> 3D Printing</span>
-          <span class="chip" role="listitem" data-mag><span class="emoji" aria-hidden="true">📐</span> Fusion 360</span>
-          <span class="chip" role="listitem" data-mag><span class="emoji" aria-hidden="true">⚙️</span> C/C++</span>
+      <section id="projects">
+        <div class="section-label" data-scatter>Projects</div>
+        <div class="projects">
+          <a class="project" href="https://github.com/Adad650/discordBot-v1" target="_blank" rel="noopener">
+            <div>
+              <div class="project-name" data-scatter>discordBot-v1</div>
+              <div class="project-desc" data-scatter>Discord bot that tells the current time</div>
+            </div>
+            <div class="project-right"><span class="tag">Python</span><span class="arrow">&rarr;</span></div>
+          </a>
+          <a class="project" href="https://github.com/Adad650/Morse-Code-Keyboard-Translator" target="_blank" rel="noopener">
+            <div>
+              <div class="project-name" data-scatter>Morse-Code-Keyboard-Translator</div>
+              <div class="project-desc" data-scatter>Keyboard to Morse code translator for quick practice</div>
+            </div>
+            <div class="project-right"><span class="tag">Python</span><span class="arrow">&rarr;</span></div>
+          </a>
+          <a class="project" href="https://github.com/Adad650/studyBuddy" target="_blank" rel="noopener">
+            <div>
+              <div class="project-name" data-scatter>studyBuddy</div>
+              <div class="project-desc" data-scatter>Simple study helper/organizer to keep sessions on track</div>
+            </div>
+            <div class="project-right"><span class="tag">Python</span><span class="arrow">&rarr;</span></div>
+          </a>
+          <a class="project" href="https://github.com/Adad650/garageSensor" target="_blank" rel="noopener">
+            <div>
+              <div class="project-name" data-scatter>ESP32 Parking Assistant</div>
+              <div class="project-desc" data-scatter>Ultrasonic-guided garage parking with distance feedback on LEDs</div>
+            </div>
+            <div class="project-right"><span class="tag">ESP32</span><span class="arrow">&rarr;</span></div>
+          </a>
+          <a class="project" href="https://github.com/Adad650/gamingHTML" target="_blank" rel="noopener">
+            <div>
+              <div class="project-name" data-scatter>Gaming Website</div>
+              <div class="project-desc" data-scatter>A fun web playground featuring classic games</div>
+            </div>
+            <div class="project-right"><span class="tag">HTML/JS</span><span class="arrow">&rarr;</span></div>
+          </a>
+          <a class="project" href="https://github.com/Adad650/alarmClock" target="_blank" rel="noopener">
+            <div>
+              <div class="project-name" data-scatter>Arduino Alarm Clock</div>
+              <div class="project-desc" data-scatter>DIY alarm with buzzer, time display, and snooze button</div>
+            </div>
+            <div class="project-right"><span class="tag">Arduino</span><span class="arrow">&rarr;</span></div>
+          </a>
+          <a class="project" href="https://github.com/Adad650/issLiveLocation" target="_blank" rel="noopener">
+            <div>
+              <div class="project-name" data-scatter>ISS Live Location</div>
+              <div class="project-desc" data-scatter>Fetches and displays the ISS position using a public API</div>
+            </div>
+            <div class="project-right"><span class="tag">Python</span><span class="arrow">&rarr;</span></div>
+          </a>
+          <a class="project" href="https://github.com/Adad650/funButUseless" target="_blank" rel="noopener">
+            <div>
+              <div class="project-name" data-scatter>Fun but Useless</div>
+              <div class="project-desc" data-scatter>Silly experiments in C/C++</div>
+            </div>
+            <div class="project-right"><span class="tag">C/C++</span><span class="arrow">&rarr;</span></div>
+          </a>
+          <a class="project" href="https://github.com/Adad650/Hangman" target="_blank" rel="noopener">
+            <div>
+              <div class="project-name" data-scatter>Hangman / Wordle</div>
+              <div class="project-desc" data-scatter>Word guessing games built with clean Python</div>
+            </div>
+            <div class="project-right"><span class="tag">Python</span><span class="arrow">&rarr;</span></div>
+          </a>
         </div>
       </section>
 
-      <section class="card tilt" aria-labelledby="contact-heading" data-mag>
-        <h2 id="contact-heading">Contact</h2>
-        <div class="links" aria-label="Primary links">
-          <a class="link-chip" href="mailto:ezioadfek@gmail.com" aria-label="Email Adi" data-mag>Email</a>
-          <a class="link-chip" href="https://github.com/Adad650" target="_blank" rel="noopener" aria-label="Adi on GitHub" data-mag>GitHub</a>
+      <section id="skills">
+        <div class="section-label" data-scatter>Skills</div>
+        <div class="skills">
+          <span class="skill" data-scatter>Python</span>
+          <span class="skill" data-scatter>Arduino</span>
+          <span class="skill" data-scatter>ESP32</span>
+          <span class="skill" data-scatter>OpenCV</span>
+          <span class="skill" data-scatter>3D Printing</span>
+          <span class="skill" data-scatter>Fusion 360</span>
+          <span class="skill" data-scatter>C/C++</span>
         </div>
-        <div class="socials" style="margin-top:10px;" aria-label="Social links">
-          <a href="https://makerworld.com/en/@making_music" target="_blank" rel="noopener" aria-label="Adi on MakerWorld" data-mag>MakerWorld</a>
-          <a href="https://www.printables.com/@makingmusic_2433269" target="_blank" rel="noopener" aria-label="Adi on Printables" data-mag>Printables</a>
+      </section>
+
+      <section id="contact">
+        <div class="section-label" data-scatter>Contact</div>
+        <div class="contact-links">
+          <a href="mailto:ezioadfek@gmail.com" data-scatter>Email</a>
+          <a href="https://github.com/Adad650" target="_blank" rel="noopener" data-scatter>GitHub</a>
+          <a href="https://makerworld.com/en/@making_music" target="_blank" rel="noopener" data-scatter>MakerWorld</a>
+          <a href="https://www.printables.com/@makingmusic_2433269" target="_blank" rel="noopener" data-scatter>Printables</a>
         </div>
       </section>
     </main>
 
-    <footer>© <span id="year"></span> Adi Takhar • Built with Flask</footer>
+    <footer>&copy; 2025 Adi Takhar</footer>
   </div>
 
-  <!-- custom cursor ring -->
-  <div class="cursor" id="cursor" aria-hidden="true"></div>
-
   <script>
-    /* Year + Theme */
-    document.getElementById('year').textContent = new Date().getFullYear();
-    const toggle = document.getElementById('themeToggle');
-    const KEY = 'theme-preference';
-    const root = document.documentElement;
-    const getPref = () => localStorage.getItem(KEY);
-    const setPref = (v) => localStorage.setItem(KEY, v);
-    const applyTheme = (m) => {
-      if (m === 'light') { root.style.colorScheme = 'light'; document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0ea5e9'); }
-      else if (m === 'dark') { root.style.colorScheme = 'dark'; document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0ea5e9'); }
-      else { root.style.colorScheme = ''; }
-    };
-    const saved = getPref(); if (saved) applyTheme(saved);
-    toggle?.addEventListener('click', () => { const cur = getPref(); const next = cur === 'dark' ? 'light' : 'dark'; setPref(next); applyTheme(next); });
+    (function () {
+      const COLS = 9;
+      const ROWS = 16;
+      const wrap = document.getElementById('mosaicWrap');
+      const section = document.getElementById('mosaicSection');
+      const mosaicText = document.getElementById('mosaicText');
+      const scrollHint = document.getElementById('scrollHint');
 
-    /* WOW engine (hover, tilt, spotlight, cursor) */
-    const cursor = document.getElementById('cursor');
-    let mx = innerWidth/2, my = innerHeight/2;
+      // Seeded random so scatter is deterministic
+      function mulberry32(a) {
+        return function () {
+          a |= 0; a = a + 0x6D2B79F5 | 0;
+          var t = Math.imul(a ^ a >>> 15, 1 | a);
+          t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+          return ((t ^ t >>> 14) >>> 0) / 4294967296;
+        };
+      }
 
-    addEventListener('mousemove', (e) => {
-      mx = e.clientX; my = e.clientY;
-      root.style.setProperty('--mx', mx + 'px');
-      root.style.setProperty('--my', my + 'px');
-      root.style.setProperty('--mxp', (mx / innerWidth).toFixed(4));
-      root.style.setProperty('--myp', (my / innerHeight).toFixed(4));
-      if (cursor) cursor.style.transform = `translate(${mx - 0.5}px, ${my - 0.5}px) translate(-50%, -50%)`;
-    }, { passive: true });
+      const rand = mulberry32(42);
 
-    function __initMag(scope = document){
-      const magItems = Array.from(scope.querySelectorAll('[data-mag]'));
-      const strength = 18, tiltMax = 9, damp = 0.18;
-      const lerp = (a,b,t)=>a+(b-a)*t;
-
-      magItems.forEach(el => {
-        if (el.__magInit) return; el.__magInit = true;
-        let tx = 0, ty = 0, rx = 0, ry = 0;
-        const isTilt = el.classList.contains('tilt');
-
-        (function frame(){
-          el.style.transform = `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 0)` + (isTilt ? ` rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)` : '');
-          requestAnimationFrame(frame);
-        })();
-
-        function onMove(){
-          const r = el.getBoundingClientRect();
-          const cx = r.left + r.width/2, cy = r.top + r.height/2;
-          const nx = Math.max(-1, Math.min(1, (mx - cx) / (r.width/2)));
-          const ny = Math.max(-1, Math.min(1, (my - cy) / (r.height/2)));
-          tx = lerp(tx, nx * strength, damp);
-          ty = lerp(ty, ny * strength, damp);
-          if (isTilt){ rx = lerp(rx, (-ny) * tiltMax, damp); ry = lerp(ry, (nx) * tiltMax, damp); }
+      // Split text elements into per-character spans
+      const charEls = [];
+      mosaicText.querySelectorAll('[data-text]').forEach(function (el) {
+        var text = el.getAttribute('data-text');
+        var accentLast = el.hasAttribute('data-accent-last');
+        el.textContent = '';
+        for (var i = 0; i < text.length; i++) {
+          var ch = text[i];
+          var span = document.createElement('span');
+          if (ch === ' ') {
+            span.className = 'char char-space';
+            span.innerHTML = '&nbsp;';
+          } else {
+            span.className = 'char';
+            span.textContent = ch;
+          }
+          if (accentLast && i === text.length - 1) {
+            span.style.color = 'var(--accent)';
+          }
+          var sx = (rand() - 0.5) * 800;
+          var sy = (rand() - 0.5) * 600;
+          var sr = (rand() - 0.5) * 120;
+          var ss = 0.3 + rand() * 0.5;
+          // Stagger based on index, similar range to tiles
+          var cx = (i - text.length / 2) / text.length;
+          var delay = Math.abs(cx) * 0.25;
+          span.dataset.sx = sx;
+          span.dataset.sy = sy;
+          span.dataset.sr = sr;
+          span.dataset.ss = ss;
+          span.dataset.delay = delay;
+          el.appendChild(span);
+          charEls.push(span);
         }
-        function onEnter(){ cursor?.classList.add('-hot'); el.style.boxShadow = '0 18px 40px rgba(14,165,233,.28)'; }
-        function onLeave(){
-          cursor?.classList.remove('-hot'); el.style.boxShadow = '';
-          const relax = () => { tx = lerp(tx, 0, .2); ty = lerp(ty, 0, .2); rx = lerp(rx, 0, .2); ry = lerp(ry, 0, .2);
-            if (Math.abs(tx)>.1 || Math.abs(ty)>.1 || Math.abs(rx)>.1 || Math.abs(ry)>.1) requestAnimationFrame(relax);
-          }; relax();
-        }
-        el.addEventListener('mouseenter', onEnter);
-        el.addEventListener('mousemove', onMove);
-        el.addEventListener('mouseleave', onLeave);
-        el.addEventListener('focusin', () => cursor?.classList.add('-hot'));
-        el.addEventListener('focusout', () => cursor?.classList.remove('-hot'));
       });
-    }
 
-    __initMag(document);
+      const tiles = [];
 
-    const orbs = document.querySelectorAll('.orb');
-    addEventListener('mousemove', () => {
-      const px = (mx / innerWidth - 0.5) * 2, py = (my / innerHeight - 0.5) * 2;
-      orbs.forEach((o, i) => { const depth = (i+1) * 6; o.style.transform = `translate(${px * depth}px, ${py * depth}px)`; });
-    }, { passive:true });
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const tile = document.createElement('div');
+          tile.className = 'tile';
+          tile.style.setProperty('--cols', COLS);
+          tile.style.setProperty('--rows', ROWS);
 
-    function updateCursorVisibility(){
-      const touch = matchMedia('(hover: none) and (pointer: coarse)').matches;
-      if (cursor) cursor.style.display = touch ? 'none' : 'block';
-    }
-    updateCursorVisibility(); addEventListener('resize', updateCursorVisibility);
+          const w = 100 / COLS;
+          const h = 100 / ROWS;
+          tile.style.width = w + '%';
+          tile.style.height = h + '%';
+          tile.style.left = (c * w) + '%';
+          tile.style.top = (r * h) + '%';
+          tile.style.backgroundPosition =
+            (c / (COLS - 1) * 100) + '% ' + (r / (ROWS - 1) * 100) + '%';
+
+          // Each tile gets a random scatter origin
+          const scatterX = (rand() - 0.5) * 800;
+          const scatterY = (rand() - 0.5) * 600;
+          const scatterRot = (rand() - 0.5) * 120;
+          const scatterScale = 0.3 + rand() * 0.5;
+          // Stagger: tiles further from center assemble slightly later
+          const cx = (c - COLS / 2) / COLS;
+          const cy = (r - ROWS / 2) / ROWS;
+          const dist = Math.sqrt(cx * cx + cy * cy);
+          const delay = dist * 0.25; // 0 to ~0.25
+
+          tile.dataset.sx = scatterX;
+          tile.dataset.sy = scatterY;
+          tile.dataset.sr = scatterRot;
+          tile.dataset.ss = scatterScale;
+          tile.dataset.delay = delay;
+
+          wrap.appendChild(tile);
+          tiles.push(tile);
+        }
+      }
+
+      function ease(t) {
+        // cubic ease-in-out
+        return t < 0.5
+          ? 4 * t * t * t
+          : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+
+      let ticking = false;
+
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+
+      function update() {
+        ticking = false;
+        const rect = section.getBoundingClientRect();
+        const sectionH = rect.height - window.innerHeight;
+        const scrolled = -rect.top;
+        const rawProgress = Math.max(0, Math.min(1, scrolled / sectionH));
+
+        // Hide scroll hint after a bit of scrolling
+        if (scrollHint) {
+          scrollHint.style.opacity = rawProgress < 0.05 ? '0.6' : '0';
+        }
+
+        for (let i = 0; i < tiles.length; i++) {
+          const t = tiles[i];
+          const delay = parseFloat(t.dataset.delay);
+          // Each tile has its own progress window
+          const tileProgress = Math.max(0, Math.min(1, (rawProgress - delay * rawProgress) / (1 - delay * 0.8)));
+          const p = ease(tileProgress);
+
+          const sx = parseFloat(t.dataset.sx) * (1 - p);
+          const sy = parseFloat(t.dataset.sy) * (1 - p);
+          const sr = parseFloat(t.dataset.sr) * (1 - p);
+          const ss = parseFloat(t.dataset.ss) + (1 - parseFloat(t.dataset.ss)) * p;
+
+          t.style.transform =
+            'translate(' + sx.toFixed(1) + 'px,' + sy.toFixed(1) + 'px) ' +
+            'rotate(' + sr.toFixed(1) + 'deg) ' +
+            'scale(' + ss.toFixed(3) + ')';
+          t.style.opacity = (0.15 + 0.85 * p).toFixed(2);
+        }
+
+        // Animate text characters — same timing as tiles
+        for (var j = 0; j < charEls.length; j++) {
+          var ch = charEls[j];
+          var chDelay = parseFloat(ch.dataset.delay);
+          var chProgress = Math.max(0, Math.min(1, (rawProgress - chDelay * rawProgress) / (1 - chDelay * 0.8)));
+          var cp = ease(chProgress);
+
+          var csx = parseFloat(ch.dataset.sx) * (1 - cp);
+          var csy = parseFloat(ch.dataset.sy) * (1 - cp);
+          var csr = parseFloat(ch.dataset.sr) * (1 - cp);
+          var css = parseFloat(ch.dataset.ss) + (1 - parseFloat(ch.dataset.ss)) * cp;
+
+          ch.style.transform =
+            'translate(' + csx.toFixed(1) + 'px,' + csy.toFixed(1) + 'px) ' +
+            'rotate(' + csr.toFixed(1) + 'deg) ' +
+            'scale(' + css.toFixed(3) + ')';
+          ch.style.opacity = (0.15 + 0.85 * cp).toFixed(2);
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      update();
+
+      // --- Scatter text in body sections (scroll-driven, reversible) ---
+      var scatterRand = mulberry32(99);
+      var scatterEls = document.querySelectorAll('[data-scatter]');
+      var scatterGroups = [];
+
+      scatterEls.forEach(function (el) {
+        var text = el.textContent;
+        var accentSpan = el.querySelector('span');
+        var accentChar = accentSpan ? accentSpan.textContent : null;
+
+        el.textContent = '';
+        var chars = [];
+
+        for (var i = 0; i < text.length; i++) {
+          var c = text[i];
+          var span = document.createElement('span');
+          if (c === ' ') {
+            span.className = 'sc sc-space';
+            span.innerHTML = '&nbsp;';
+          } else {
+            span.className = 'sc';
+            span.textContent = c;
+          }
+
+          if (accentChar && i === text.length - 1 && c === accentChar) {
+            span.style.color = 'var(--accent)';
+          }
+
+          var sx = (scatterRand() - 0.5) * 400;
+          var sy = (scatterRand() - 0.5) * 200;
+          var sr = (scatterRand() - 0.5) * 60;
+          var ss = 0.4 + scatterRand() * 0.4;
+          var stagger = (i / text.length) * 0.2;
+
+          chars.push({ el: span, sx: sx, sy: sy, sr: sr, ss: ss, stagger: stagger });
+          el.appendChild(span);
+        }
+
+        scatterGroups.push({ container: el, chars: chars });
+      });
+
+      function updateScatter() {
+        var vh = window.innerHeight;
+        for (var g = 0; g < scatterGroups.length; g++) {
+          var group = scatterGroups[g];
+          var rect = group.container.getBoundingClientRect();
+          // Progress: 0 when element bottom enters viewport, 1 when element top is 30% up from bottom
+          var rawP = 1 - (rect.top - vh * 0.7) / (vh * 0.35);
+          rawP = Math.max(0, Math.min(1, rawP));
+
+          for (var i = 0; i < group.chars.length; i++) {
+            var ch = group.chars[i];
+            var charP = Math.max(0, Math.min(1, (rawP - ch.stagger) / (1 - ch.stagger)));
+            var p = ease(charP);
+
+            var tx = ch.sx * (1 - p);
+            var ty = ch.sy * (1 - p);
+            var tr = ch.sr * (1 - p);
+            var ts = ch.ss + (1 - ch.ss) * p;
+
+            ch.el.style.transform =
+              'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) ' +
+              'rotate(' + tr.toFixed(1) + 'deg) ' +
+              'scale(' + ts.toFixed(3) + ')';
+            ch.el.style.opacity = (0.1 + 0.9 * p).toFixed(2);
+          }
+        }
+      }
+
+      // Hook into the same scroll listener
+      var origOnScroll = onScroll;
+      function combinedScroll() {
+        origOnScroll();
+        requestAnimationFrame(updateScatter);
+      }
+      window.removeEventListener('scroll', onScroll);
+      window.addEventListener('scroll', combinedScroll, { passive: true });
+      updateScatter();
+    })();
   </script>
 </body>
 </html>
